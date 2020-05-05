@@ -12,7 +12,7 @@ namespace HackedDesign
         [Header("Settings")]
         [SerializeField] private float movementSpeed = 10;
         [SerializeField] private float rotateSpeed = 340;
-        [SerializeField] private float leanAngle = 33;
+        [SerializeField] private float leanAngle = 80;
         [SerializeField] private float leanTime = 33;
         [SerializeField] private float clampX = 0.9f;
         [SerializeField] private float clampY = 0.9f;
