@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Waverider 1985.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Wave Overdrive 1985.inputactions'
 
 using System;
 using System.Collections;
@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @Waverider1985 : IInputActionCollection, IDisposable
+public class @WaveOverdrive1985 : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @Waverider1985()
+    public @WaveOverdrive1985()
     {
         asset = InputActionAsset.FromJson(@"{
-    ""name"": ""Waverider 1985"",
+    ""name"": ""Wave Overdrive 1985"",
     ""maps"": [
         {
             ""name"": ""Player"",
@@ -864,8 +864,8 @@ public class @Waverider1985 : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     public struct PlayerActions
     {
-        private @Waverider1985 m_Wrapper;
-        public PlayerActions(@Waverider1985 wrapper) { m_Wrapper = wrapper; }
+        private @WaveOverdrive1985 m_Wrapper;
+        public PlayerActions(@WaveOverdrive1985 wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -913,8 +913,8 @@ public class @Waverider1985 : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     public struct UIActions
     {
-        private @Waverider1985 m_Wrapper;
-        public UIActions(@Waverider1985 wrapper) { m_Wrapper = wrapper; }
+        private @WaveOverdrive1985 m_Wrapper;
+        public UIActions(@WaveOverdrive1985 wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
