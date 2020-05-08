@@ -1,5 +1,5 @@
 {
-    "name": "Waverider 1985",
+    "name": "Wave Overdrive 1985",
     "maps": [
         {
             "name": "Player",
@@ -17,6 +17,14 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "72dd3135-dcae-46e3-b9b0-3511b5a340dc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "4a2f78ba-6e97-40b3-84bc-0256c14e3124",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -207,6 +215,50 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78689c9b-2ca2-4e8c-ba71-1ed20ea4d336",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b48c75df-0d23-4d36-9e67-155c53b2070c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2383e40d-d313-4db8-bdb4-11f323b6e124",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac072aad-8550-4562-8f1a-3c367ac720bc",
+                    "path": "<XRController>/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -15,8 +15,7 @@ namespace HackedDesign
         [SerializeField] private float rotateSpeed = 340;
         [SerializeField] private float leanAngle = 80;
         [SerializeField] private float leanTime = 33;
-        [SerializeField] private float clampX = 0.9f;
-        [SerializeField] private float clampY = 0.9f;
+        [SerializeField] private Rect clamp = new Rect(0.2f, 0.2f, 0.6f, 0.6f);
         [SerializeField] private float heightAboveWaves = 1.0f;
         [SerializeField] private bool allowYMovement = false;
         [SerializeField] private bool invertX = false;
@@ -26,6 +25,8 @@ namespace HackedDesign
         [SerializeField] private float currentTime = 0;
         [SerializeField] private float currentSpeed = 0;
         [SerializeField] private float startTime = 0;
+
+
 
         [Header("Referenced GameObjects")]
         [SerializeField] private Camera mainCamera;
@@ -56,12 +57,17 @@ namespace HackedDesign
         private void UpdateShipPosition()
         {
             playerModel.localPosition += new Vector3(inputVector.x, allowYMovement ? inputVector.y : 0) * movementSpeed * Time.deltaTime;
+
+            // Clamp input to the screen view port first
             Vector3 modelViewPos = mainCamera.WorldToViewportPoint(playerModel.position);
-            modelViewPos.x = Mathf.Clamp(modelViewPos.x, 0, clampX);
-            modelViewPos.y = Mathf.Clamp(modelViewPos.y, 0, clampY);
+            modelViewPos.x = Mathf.Clamp(modelViewPos.x, clamp.xMin, clamp.xMax);
+            modelViewPos.y = Mathf.Clamp(modelViewPos.y, clamp.yMin, clamp.yMax);
             Vector3 modelPos = mainCamera.ViewportToWorldPoint(modelViewPos);
-            modelPos.y = Mathf.Max(waves.GetHeight(playerModel.position) + heightAboveWaves, modelPos.y);
-            playerModel.position = modelPos;           
+
+            // Then apply any height adjustments
+            var height = Mathf.Max(waves.GetHeight(playerModel.position) + heightAboveWaves, modelPos.y);
+            modelPos.y = Mathf.Lerp(modelPos.y, height, Time.deltaTime * movementSpeed);
+            playerModel.position = modelPos;
         }
 
         private void UpdateShipRotation()
