@@ -6,14 +6,15 @@ using UnityEngine.SocialPlatforms;
 
 public class Waves : MonoBehaviour
 {
-    [Header("Configured GameObjects")]
-    [SerializeField] private Transform updateLocation;
-    //Public Properties
+    [Header("Referenced GameObjects")]
+    [SerializeField] private Transform updateLocation = null;
+
+    [Header("Settings")]
     [SerializeField] private int width = 10;
     [SerializeField] private int depth = 1500;
     [SerializeField] private int updateDepth = 10;
     [SerializeField] private float UVScale = 2f;
-    [SerializeField] private Octave[] Octaves;
+    [SerializeField] private Octave[] Octaves = null;
 
     protected Vector3[] verts;
 
@@ -23,6 +24,13 @@ public class Waves : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        ConstructMesh();
+    }
+
+#if UNITY_EDITOR
+    [ContextMenu("Construct wave mesh")]
+    public void ConstructMeshInEditor()
     {
         //Mesh Setup
         Mesh = new Mesh();
@@ -34,9 +42,28 @@ public class Waves : MonoBehaviour
         UpdateWaves(Vector3.zero, depth);
         Mesh.RecalculateNormals();
         Mesh.RecalculateBounds();
-        MeshFilter = gameObject.AddComponent<MeshFilter>();
-        MeshFilter.mesh = Mesh;  
+        MeshFilter = gameObject.GetComponent<MeshFilter>();
+        MeshFilter.mesh = Mesh;
     }
+
+#endif
+
+    public void ConstructMesh()
+    {
+        //Mesh Setup
+        Mesh = new Mesh();
+        Mesh.name = gameObject.name;
+        verts = GenerateVerts();
+        Mesh.vertices = GenerateVerts();
+        Mesh.triangles = GenerateTries();
+        Mesh.uv = GenerateUVs();
+        UpdateWaves(Vector3.zero, depth);
+        Mesh.RecalculateNormals();
+        Mesh.RecalculateBounds();
+        MeshFilter = gameObject.GetComponent<MeshFilter>();
+        MeshFilter.mesh = Mesh;
+    }
+
 
     public float GetHeight(Vector3 position)
     {
@@ -150,7 +177,7 @@ public class Waves : MonoBehaviour
         // Handle scaling
         int zStart = Mathf.RoundToInt(localPosStart.z);
         int zEnd = Mathf.RoundToInt(Mathf.Min(localPosStart.z + updateDepth, depth));
-        
+
 
         //var verts = Mesh.vertices;
         for (int x = 0; x <= width; x++)

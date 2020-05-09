@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,32 +24,75 @@ namespace HackedDesign
         [SerializeField] private float forwardSpeed = 1;
         [SerializeField] private float acceleration = 0.01f;
         [SerializeField] private float currentTime = 0;
-        [SerializeField] private float currentSpeed = 0;
-        [SerializeField] private float startTime = 0;
-
-
+        [SerializeField] public float currentSpeed = 0;
+        //[SerializeField] private float startTime = 0;
+        [SerializeField] private float fireRate = 0.4f;
 
         [Header("Referenced GameObjects")]
-        [SerializeField] private Camera mainCamera;
-        [SerializeField] private Transform playerModel;
-        [SerializeField] private Waves waves;
+        [SerializeField] private Camera mainCamera = null;
+        [SerializeField] public Transform playerModel = null;
+        [SerializeField] private Waves waves = null;
+        //[SerializeField] private Pool pool = null;
+        //[SerializeField] private Bullet bullet = null;
+        [SerializeField] private Transform[] firingPoints = null;
+        [SerializeField] private Transform shield = null;
 
-        void Start()
+        [Header("State")]
+        [SerializeField] private bool firing = false;
+        [SerializeField] private float lastFireTime = 0;
+        [SerializeField] private int firingPointIndex = 0;
+        [SerializeField] private bool shielded = false;
+
+        private void Awake()
         {
-            startTime = Time.time;
+            currentSpeed = 0;
         }
-        void Update()
+
+        private void Update()
         {
-            UpdatePosition();
+            if (Game.instance.state.gameState == GameState.Playing)
+            {
+                UpdatePosition();
+                UpdateFiring();
+
+            }
             UpdateShipPosition();
             UpdateShipRotation();
             UpdateShipLean();
+            UpdateShield();
+        }
+
+        private void UpdateShield()
+        {
+            shield.gameObject.SetActive(shielded);
+        }
+
+        private void UpdateFiring()
+        {
+            if(firing && Time.time - lastFireTime >= fireRate)
+            {
+                var firingPoint = firingPoints[firingPointIndex];
+
+                var bullet = Game.instance.pool.GetPlayerBullet();
+                if (!bullet.gameObject.activeInHierarchy)
+                {
+                    bullet.gameObject.SetActive(true);
+                }
+                
+                bullet.Fire(firingPoint.position, firingPoint.forward, currentSpeed);
+                lastFireTime = Time.time;
+                firingPointIndex++;
+                if(firingPointIndex >= firingPoints.Length)
+                {
+                    firingPointIndex = 0;
+                }
+            }
         }
 
         private void UpdatePosition()
         {
             var currentPos = transform.position;
-            currentTime = Time.time - startTime;
+            currentTime = Time.time - Game.instance.playingStartTime;
             currentSpeed = forwardSpeed + (currentTime * acceleration);
             currentPos.z += currentSpeed * Time.deltaTime;
             transform.position = currentPos;
@@ -82,12 +126,37 @@ namespace HackedDesign
 
         public void MovementEvent(InputAction.CallbackContext context)
         {
-            inputVector = context.ReadValue<Vector2>();
-            if (invertX)
-                inputVector.x = 0 - inputVector.x;
+            if (Game.instance.state.gameState == GameState.Playing)
+            {
+                inputVector = context.ReadValue<Vector2>();
+                if (Game.instance.preferences.invertX)
+                    inputVector.x = 0 - inputVector.x;
 
-            if (invertY)
-                inputVector.y = 0 - inputVector.y;
+                if (Game.instance.preferences.invertY)
+                    inputVector.y = 0 - inputVector.y;
+            }
+        }
+
+        public void FireEvent(InputAction.CallbackContext context)
+        {
+            if (Game.instance.state.gameState == GameState.Playing)
+            {
+                if(context.performed)
+                {
+                    firing = true;
+                }
+            }
+
+            if (context.canceled)
+            {
+                firing = false;
+            }
+        }
+
+        public void Explode()
+        {
+            Logger.Log(name, "Player controller explode");
+            Game.instance.GameEndCrash();
         }
     }
 }
