@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Linq;
 
 namespace HackedDesign
@@ -20,6 +21,9 @@ namespace HackedDesign
         [SerializeField] private Dropdown fullScreenDropdown = null;
         [SerializeField] private Toggle invertXToggle = null;
         [SerializeField] private Toggle invertYToggle = null;
+        [SerializeField] private Slider sfxSlider = null;
+        [SerializeField] private Slider musicSlider = null;
+        [SerializeField] private AudioMixer audioMixer;
 
         
         public void NewGameClick()
@@ -50,8 +54,26 @@ namespace HackedDesign
         void Start()
         {
             preferences.Load();
+            SetPreferences();
             PopulateOptionsValues();
             Refresh();
+        }
+
+        public void SetPreferences()
+        {
+            audioMixer.SetFloat("SFXVolume", preferences.sfxVolume);
+            audioMixer.SetFloat("MusicVolume", preferences.musicVolume);
+
+            
+            Resolution scr = Screen.resolutions.FirstOrDefault(r=>r.width == preferences.resolutionWidth && r.height == preferences.resolutionHeight && r.refreshRate == preferences.resolutionRefresh);
+            
+
+            
+            Screen.SetResolution(scr.width,scr.height, (FullScreenMode)preferences.fullScreen, scr.refreshRate);
+
+
+        
+
         }
 
         public void InvertYToggleClick()
@@ -63,6 +85,33 @@ namespace HackedDesign
         public void InvertXToggleClick()
         {
             preferences.invertX = invertXToggle.isOn;
+            preferences.Save();
+        }
+
+        public void ResolutionsDropdownValueChanged()
+        {
+            preferences.resolutionHash = Screen.resolutions[resolutionsDropdown.value].GetHashCode();
+            preferences.Save();
+
+        }
+
+        public void FullScreenDropdownValueChanged()
+        {
+            preferences.fullScreen = fullScreenDropdown.value;
+            preferences.Save();
+        }
+
+        public void SFXVolumeChanged()
+        {
+            audioMixer.SetFloat("SFXVolume", sfxSlider.value);
+            preferences.sfxVolume = sfxSlider.value;
+            preferences.Save();
+        }
+
+        public void MusicVolumeChanged()
+        {
+            audioMixer.SetFloat("MusicVolume", musicSlider.value);
+            preferences.musicVolume = musicSlider.value;
             preferences.Save();
         }
 
@@ -78,17 +127,10 @@ namespace HackedDesign
 
             invertYToggle.isOn = preferences.invertY;
             invertXToggle.isOn = preferences.invertX;
-            //fullScreenToggle.isOn = Screen.fullScreen;
+            
 
-            //masterMixer.GetFloat("FXVolume", out float fxVolume);
-            //masterMixer.GetFloat("MusicVolume", out float musicVolume);
-            //fxSlider.value = (fxVolume + 80) / 100;
-            //musicSlider.value = (musicVolume + 80) / 100;
-        }
-
-        private void SaveOptions()
-        {
-
+            sfxSlider.value = preferences.sfxVolume;
+            musicSlider.value = preferences.musicVolume;
         }
 
         private void Refresh()

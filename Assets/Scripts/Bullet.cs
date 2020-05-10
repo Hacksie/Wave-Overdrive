@@ -37,6 +37,7 @@ namespace HackedDesign
         {
             if(fired)
             {
+                
                 if(Time.time - startTimer >= timeOut)
                 {
                     fired = false;
@@ -61,15 +62,22 @@ namespace HackedDesign
             Logger.Log(name, "Fire!");
             fired = true;
             startTimer = Time.time;
-            trailRenderer.Clear();
+            //gameObject.SetActive(false);
+            var tr = GetComponentInChildren<TrailRenderer>();
+            tr.Clear();
+            //trailRenderer.Clear();
+
             rigidbody.isKinematic = false;
             rigidbody.MovePosition(position);
             transform.forward = forward;
-            trailRenderer.Clear();
+
+            //trailRenderer.Clear();
+            //gameObject.SetActive(true);
 
             //rigidbody.AddForce(transform.forward * (20 * speed));
 
             rigidbody.velocity = transform.forward * (momentum + speed);
+            tr.Clear();
 
         }
     }
