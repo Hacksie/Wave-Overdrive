@@ -7,16 +7,9 @@ namespace HackedDesign
     public class GunTurret : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private float fireRate = 1f;
         [SerializeField] private float rotateSpeed = 100;
 
-        [Header("Referenced GameObjects")]
-        [SerializeField] private Transform[] firingPoints = null;
 
-        [Header("State")]
-        [SerializeField] private bool firing = false;
-        [SerializeField] private float lastFireTime = 0;
-        [SerializeField] private int firingPointIndex = 0;
 
         // Start is called before the first frame update
         void Start()
@@ -29,18 +22,19 @@ namespace HackedDesign
         {
             if (Game.instance.state.gameState == GameState.Playing)
             {
-                firing = true;
+                //firing = true;
                 transform.rotation = Quaternion.LookRotation(Game.instance.player.playerModel.transform.position - transform.position, Vector3.up);
 
                     
                     //Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Game.instance.player.transform.position, Vector3.up), Mathf.Deg2Rad * rotateSpeed * Time.deltaTime);
 
                 //transform.forward = Game.instance.player.transform.position.normalized;
-                UpdateFiring();
+                //UpdateFiring();
             }
             
         }
 
+        /*
         private void UpdateFiring()
         {
             if (firing && Time.time - lastFireTime >= fireRate)
@@ -61,6 +55,6 @@ namespace HackedDesign
                     firingPointIndex = 0;
                 }
             }
-        }
+        }*/
     }
 }

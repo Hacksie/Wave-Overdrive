@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3292540199628108808}
   - component: {fileID: 6067354118175565626}
   - component: {fileID: 4202422464802489601}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Arch
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -921,9 +921,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8562494494364224493}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Arch
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

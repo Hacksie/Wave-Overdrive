@@ -153,9 +153,22 @@ namespace HackedDesign
             }
         }
 
-        public void Explode()
+        public void Hit(Vector3 position, int amount)
+        {
+            if(Game.instance.IsInvulnerable())
+            {
+                return;
+            }
+            Explode(position);
+        }
+
+        public void Explode(Vector3 position)
         {
             Logger.Log(name, "Player controller explode");
+            Explosion explosion = Game.instance.pool.GetBigExplosion();
+
+            explosion.transform.position = position;
+            explosion.Explode();
             Game.instance.GameEndCrash();
         }
     }

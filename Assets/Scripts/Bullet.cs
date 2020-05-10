@@ -9,7 +9,7 @@ namespace HackedDesign
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private float speed = 50.0f;
-        [SerializeField] private float damage = 50;
+        [SerializeField] private int damage = 50;
         
         [SerializeField] private float timeOut = 5.0f;
         [Header("Referenced GameObjects")]
@@ -22,7 +22,10 @@ namespace HackedDesign
         private float startTimer = 0;
 
         
-        
+        public int GetDamageAmount()
+        {
+            return damage;
+        }
         void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();

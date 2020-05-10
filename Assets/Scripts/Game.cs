@@ -25,6 +25,7 @@ namespace HackedDesign
         [SerializeField] private int stagingTime = 5;
         [SerializeField] private float scoreTickTime = 1;
         [SerializeField] private bool skipStaging = false;
+        [SerializeField] private bool invulnerable = true;
 
         private float stagingStartTime = 0;
         public float playingStartTime = 0;
@@ -33,6 +34,11 @@ namespace HackedDesign
         Game()
         {
             instance = this;
+        }
+
+        public bool IsInvulnerable()
+        {
+            return invulnerable;
         }
 
         public void Quit()
@@ -56,6 +62,11 @@ namespace HackedDesign
             state.score += amount;
         }
 
+        public void IncreaseHealth(int amount)
+        {
+            state.health = Mathf.Min(state.health + amount, state.maxHealth);
+        }
+
         public void SaveScores()
         {
 
@@ -69,8 +80,8 @@ namespace HackedDesign
         // Start is called before the first frame update
         void Start()
         {
-            state.Reset();
             preferences.Load();
+            state.Reset();
             StartLevel();
         }
 

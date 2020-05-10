@@ -517,6 +517,36 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1760118954}
+--- !u!1 &70851732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70851733}
+  m_Layer: 0
+  m_Name: Enemy Bullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &70851733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70851732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1680907405}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &81208002
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,7 +809,7 @@ GameObject:
   - component: {fileID: 103996384}
   - component: {fileID: 103996383}
   m_Layer: 5
-  m_Name: Speed Text (1)
+  m_Name: Health Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -824,7 +854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7749dfa67e9742c42bf83790f08b296e, type: 2}
   m_sharedMaterial: {fileID: -7293290286305829885, guid: 7749dfa67e9742c42bf83790f08b296e, type: 2}
@@ -1066,6 +1096,7 @@ MonoBehaviour:
   scoreText: {fileID: 342034215}
   levelText: {fileID: 807376544}
   speedText: {fileID: 682513199}
+  healthText: {fileID: 103996383}
 --- !u!1 &179354633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,7 +1872,7 @@ GameObject:
   - component: {fileID: 455510053}
   - component: {fileID: 455510052}
   - component: {fileID: 455510051}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Quad (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1873,7 +1904,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &455510052
@@ -2071,12 +2102,12 @@ GameObject:
   - component: {fileID: 496386966}
   - component: {fileID: 496386965}
   m_Layer: 5
-  m_Name: Speed Text (2)
+  m_Name: Shield Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &496386964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2732,7 +2763,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh113322
+  m_Name: pb_Mesh18074
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3099,7 +3130,6 @@ GameObject:
   - component: {fileID: 775185740}
   - component: {fileID: 775185739}
   - component: {fileID: 775185734}
-  - component: {fileID: 775185741}
   m_Layer: 8
   m_Name: Ship Model
   m_TagString: Player
@@ -3119,13 +3149,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b97ab64e1411b7429a9166a82f5a4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreObstacles: 0
+  isBig: 1
   explosionEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 50243508}
         m_TargetAssemblyTypeName: HackedDesign.PlayerController, Assembly-CSharp
         m_MethodName: Explode
-        m_Mode: 1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 50243508}
+        m_TargetAssemblyTypeName: HackedDesign.PlayerController, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5050,7 +5097,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 1.5, z: 9}
+  m_Size: {x: 6, y: 2, z: 9}
   m_Center: {x: 0, y: 0.5, z: 3.5}
 --- !u!54 &775185740
 Rigidbody:
@@ -5068,18 +5115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &775185741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775185733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69ad8404ed704684a9dc26292847185d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &790333379
 GameObject:
   m_ObjectHideFlags: 0
@@ -5224,6 +5259,8 @@ MonoBehaviour:
     gameState: 1
     score: 0
     level: 1
+    health: 50
+    maxHealth: 100
     pickups: 0
     kills: 0
     code: 
@@ -5237,7 +5274,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 248367811}
   stagingTime: 5
   scoreTickTime: 1
-  skipStaging: 0
+  skipStaging: 1
   playingStartTime: 0
   lastScoreTick: 0
 --- !u!1 &802456275
@@ -5250,7 +5287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 802456276}
   m_Layer: 0
-  m_Name: Explosions
+  m_Name: Big Explosions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6232,12 +6269,12 @@ GameObject:
   - component: {fileID: 981568407}
   - component: {fileID: 981568406}
   m_Layer: 5
-  m_Name: Speed Label (2)
+  m_Name: Shield Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &981568405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6360,7 +6397,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh113478
+  m_Name: pb_Mesh18230
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6582,7 +6619,7 @@ GameObject:
   - component: {fileID: 1064186894}
   - component: {fileID: 1064186893}
   - component: {fileID: 1064186892}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9898,7 +9935,7 @@ GameObject:
   - component: {fileID: 1490151665}
   - component: {fileID: 1490151664}
   m_Layer: 5
-  m_Name: Speed Label (1)
+  m_Name: Health Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9943,7 +9980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Dmg:'
+  m_text: 'Health:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7749dfa67e9742c42bf83790f08b296e, type: 2}
   m_sharedMaterial: {fileID: -7293290286305829885, guid: 7749dfa67e9742c42bf83790f08b296e, type: 2}
@@ -10937,6 +10974,7 @@ Transform:
   - {fileID: 1794545941}
   - {fileID: 802456276}
   - {fileID: 1990557332}
+  - {fileID: 70851733}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10954,13 +10992,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8831737828714609941, guid: c3a7ba9445d38124b9e4e899a3efcae3, type: 3}
   enemyBulletPrefab: {fileID: 5445646272612668795, guid: 71ff8cb1bc107ee4ca5495f245aa785b, type: 3}
-  explosionPrefab: {fileID: 6971359018565046886, guid: dfb63fb5c8a529840a581234d6b1a1bf, type: 3}
+  bigExplosionPrefab: {fileID: 6971359018565046886, guid: dfb63fb5c8a529840a581234d6b1a1bf, type: 3}
   playerBulletParent: {fileID: 1794545941}
-  enemyBulletParent: {fileID: 0}
-  explosionParent: {fileID: 802456276}
+  enemyBulletParent: {fileID: 70851733}
+  bigExplosionParent: {fileID: 802456276}
   enemyBullets: []
   playerBullets: []
-  explosions: []
+  bigExplosions: []
 --- !u!1 &1707955688
 GameObject:
   m_ObjectHideFlags: 0
@@ -11204,7 +11242,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760118951}
-  m_LocalRotation: {x: -0.00013300404, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.00020549819, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 40, y: 7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

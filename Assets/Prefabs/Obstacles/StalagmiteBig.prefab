@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6037707918940220705}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StalagmiteBig
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 4108842250162380464}
   - component: {fileID: 2117096179663177477}
   - component: {fileID: 2732511533963550928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

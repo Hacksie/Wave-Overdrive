@@ -11,15 +11,15 @@ namespace HackedDesign
         [Header("Prefabs")]
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject enemyBulletPrefab;
-        [SerializeField] private GameObject explosionPrefab;
+        [SerializeField] private GameObject bigExplosionPrefab;
         [Header("Parents")]
         [SerializeField] private Transform playerBulletParent;
         [SerializeField] private Transform enemyBulletParent;
-        [SerializeField] private Transform explosionParent;
+        [SerializeField] private Transform bigExplosionParent;
         [Header("State")]
         [SerializeField] private List<Bullet> enemyBullets;
         [SerializeField] private List<Bullet> playerBullets;
-        [SerializeField] private List<Explosion> explosions;
+        [SerializeField] private List<Explosion> bigExplosions;
         // Start is called before the first frame update
         void Start()
         {
@@ -60,15 +60,29 @@ namespace HackedDesign
             return bullet;
         }
 
-        public Explosion GetExplosion()
+        public Explosion GetBigExplosion()
         {
-            var explosion = explosions.FirstOrDefault(e => !e.exploded);
+            var explosion = bigExplosions.FirstOrDefault(e => !e.exploded);
             
             if(!explosion)
             {
-                var go = Instantiate(explosionPrefab, explosionParent);
+                var go = Instantiate(bigExplosionPrefab, bigExplosionParent);
                 explosion = go.GetComponent<Explosion>();
-                explosions.Add(explosion);
+                bigExplosions.Add(explosion);
+            }
+
+            return explosion;
+        }
+
+        public Explosion GetSmallExplosion()
+        {
+            var explosion = bigExplosions.FirstOrDefault(e => !e.exploded);
+
+            if (!explosion)
+            {
+                var go = Instantiate(bigExplosionPrefab, bigExplosionParent);
+                explosion = go.GetComponent<Explosion>();
+                bigExplosions.Add(explosion);
             }
 
             return explosion;

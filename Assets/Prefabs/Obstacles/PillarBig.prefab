@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7354477272747531916}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PillarBig
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 7354477273944039182}
   - component: {fileID: 7354477273944039181}
   - component: {fileID: 7354477273944039180}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

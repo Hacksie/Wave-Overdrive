@@ -8,6 +8,7 @@ namespace HackedDesign
     public class Pickup : MonoBehaviour
     {
         [SerializeField] private int score;
+        [SerializeField] private int health;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -15,6 +16,7 @@ namespace HackedDesign
             {
                 Logger.Log(name, "Collect!");
                 Game.instance.IncreaseScore(score);
+                Game.instance.IncreaseHealth(health);
                 Game.instance.IncreasePickup(1);
                 gameObject.SetActive(false);
             }

@@ -10,6 +10,8 @@ namespace HackedDesign
         public GameState gameState;
         public int score;
         public int level;
+        public int health;
+        public int maxHealth;
         //public float damage;
         //public float shield;
         public int pickups;
@@ -25,8 +27,16 @@ namespace HackedDesign
         {
             score = 0;
             level = 1;
+            health = 50;
+            maxHealth = 100;
             //damage = 0;
             //shield = 0;
+            gameState = GameState.Staging;
+        }
+
+        public void SoftReset()
+        {
+            health = 100;
             gameState = GameState.Staging;
         }
     }
