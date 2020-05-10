@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 1164488908696202150}
   - component: {fileID: 8641908743753447096}
   m_Layer: 9
-  m_Name: Bullet
+  m_Name: PlayerBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c89fd18c4fa1f49a7c643a98bd8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 120
+  speed: 80
   damage: 50
   timeOut: 5
   trailRenderer: {fileID: 7443499762857303157}

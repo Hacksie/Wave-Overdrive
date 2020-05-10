@@ -29,7 +29,7 @@ namespace HackedDesign
         void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
-            rigidbody.isKinematic = true;
+            rigidbody.isKinematic = false;
         }
 
         // Update is called once per frame
@@ -39,11 +39,14 @@ namespace HackedDesign
             {
                 if(Time.time - startTimer >= timeOut)
                 {
-                    
                     fired = false;
-                    transform.position = Vector3.zero;
-                    rigidbody.isKinematic = true;
-                    rigidbody.velocity = Vector3.zero;
+
+                    //rigidbody.isKinematic = true;
+                    trailRenderer.Clear();
+                    rigidbody.MovePosition(Vector3.zero);
+                    trailRenderer.Clear();
+                    rigidbody.Sleep();
+                    
                 }
             }
         }
@@ -58,11 +61,16 @@ namespace HackedDesign
             Logger.Log(name, "Fire!");
             fired = true;
             startTimer = Time.time;
-            transform.position = position;
-            transform.forward = forward;
-            rigidbody.isKinematic = false;
-            rigidbody.velocity = transform.forward * (momentum + speed);
             trailRenderer.Clear();
+            rigidbody.isKinematic = false;
+            rigidbody.MovePosition(position);
+            transform.forward = forward;
+            trailRenderer.Clear();
+
+            //rigidbody.AddForce(transform.forward * (20 * speed));
+
+            rigidbody.velocity = transform.forward * (momentum + speed);
+
         }
     }
 }

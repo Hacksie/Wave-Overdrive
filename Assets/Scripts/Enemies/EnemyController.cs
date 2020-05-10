@@ -17,10 +17,12 @@ namespace HackedDesign
         [SerializeField] private bool firing = false;
         [SerializeField] private float lastFireTime = 0;
         [SerializeField] private int firingPointIndex = 0;
+
+        private float offset;
         // Start is called before the first frame update
         void Start()
         {
-
+            offset = Random.Range(0.0f, 0.5f);
         }
 
         // Update is called once per frame
@@ -32,18 +34,23 @@ namespace HackedDesign
 
         private void UpdateFiring()
         {
-            if (firing && Time.time - lastFireTime >= fireRate)
+            if (firing && (offset + Time.time - lastFireTime) >= fireRate)
             {
+                //Logger.Log(name, "Firing!");
                 var firingPoint = firingPoints[firingPointIndex];
 
                 var bullet = Game.instance.pool.GetEnemyBullet();
+                
                 if (!bullet.gameObject.activeInHierarchy)
                 {
                     bullet.gameObject.SetActive(true);
                 }
-
+                
                 bullet.Fire(firingPoint.position, firingPoint.forward, 0);
-                lastFireTime = Time.time;
+                
+                lastFireTime = Time.time + offset;
+                
+
                 firingPointIndex++;
                 if (firingPointIndex >= firingPoints.Length)
                 {
