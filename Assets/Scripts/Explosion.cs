@@ -7,6 +7,7 @@ namespace HackedDesign
     [RequireComponent(typeof(Animator))]
     public class Explosion : MonoBehaviour
     {
+        public bool small = false;
         public bool exploded = false;
         public float explodeStartTime = 0;
         public float explodeTimeOut = 5;
@@ -24,7 +25,16 @@ namespace HackedDesign
             {
                 exploded = false;
             }
-            animator.SetBool("explode", exploded);
+
+            if(small)
+            {
+                animator.SetBool("small explode", exploded);
+            }
+            else
+            {
+                animator.SetBool("explode", exploded);
+            }
+            
         }
 
         public void Explode()

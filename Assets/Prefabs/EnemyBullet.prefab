@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5445646272612668790}
   - component: {fileID: 5445646272612668781}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trail
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 5445646272612668783}
   - component: {fileID: 5445646272612668772}
   - component: {fileID: 5445646272612668782}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EnemyBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -188,8 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c89fd18c4fa1f49a7c643a98bd8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
-  damage: 50
+  speed: 65
+  damage: 5
   timeOut: 5
   trailRenderer: {fileID: 5445646272612668781}
   fired: 0
@@ -221,9 +221,9 @@ GameObject:
   - component: {fileID: 5445646272612668784}
   - component: {fileID: 5445646272612668787}
   - component: {fileID: 5445646272612668773}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BulletModel
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

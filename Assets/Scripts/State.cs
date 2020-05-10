@@ -27,7 +27,7 @@ namespace HackedDesign
         {
             score = 0;
             level = 1;
-            health = 50;
+            health = 100;
             maxHealth = 100;
             //damage = 0;
             //shield = 0;

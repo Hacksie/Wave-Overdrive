@@ -9,9 +9,12 @@ namespace HackedDesign
         [Header("Settings")]
         [SerializeField] private int health = 50;
         [SerializeField] private float fireRate = 1f;
+        [SerializeField] private float range = 100.0f;
+        [SerializeField] private float zDistance = 25f;
 
         [Header("Referenced GameObjects")]
         [SerializeField] private Transform[] firingPoints = null;
+        [SerializeField] private AudioSource fireAudioSource = null;
 
         [Header("State")]
         [SerializeField] private bool firing = false;
@@ -28,52 +31,69 @@ namespace HackedDesign
         // Update is called once per frame
         void Update()
         {
-            firing = true;
-            UpdateFiring();
+
+            if (Game.instance.player.transform.position.z <= (transform.position.z + zDistance) && Vector3.Distance(Game.instance.player.transform.position, transform.position) <= range)
+            {
+                firing = true;
+                UpdateFiring();
+            }
+            else
+            {
+                firing = false;
+            }
+
+
+
         }
 
         private void UpdateFiring()
         {
-            if (firing && (offset + Time.time - lastFireTime) >= fireRate)
+            if ((offset + Time.time - lastFireTime) >= fireRate)
             {
-                //Logger.Log(name, "Firing!");
                 var firingPoint = firingPoints[firingPointIndex];
 
                 var bullet = Game.instance.pool.GetEnemyBullet();
-                
+
                 if (!bullet.gameObject.activeInHierarchy)
                 {
                     bullet.gameObject.SetActive(true);
                 }
-                
+
                 bullet.Fire(firingPoint.position, firingPoint.forward, 0);
-                
+
                 lastFireTime = Time.time + offset;
-                
+
 
                 firingPointIndex++;
                 if (firingPointIndex >= firingPoints.Length)
                 {
                     firingPointIndex = 0;
                 }
+
+                fireAudioSource.Play();
             }
         }
 
         public void Hit(Vector3 position, int amount)
         {
+            SmallExplode(position);
             health -= amount;
-            Logger.Log(name, "is now at health: ", health.ToString());
+            
             if (health <= 0)
             {
                 Explode(position);
             }
-            else
-            {
-                // Small Explosion
-            }
+
         }
 
-        
+        public void SmallExplode(Vector3 position)
+        {
+            Explosion explosion = Game.instance.pool.GetSmallExplosion();
+
+            explosion.transform.position = position;
+            explosion.Explode();
+        }
+
 
         public void Explode(Vector3 position)
         {

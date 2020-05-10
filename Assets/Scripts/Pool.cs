@@ -12,14 +12,17 @@ namespace HackedDesign
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject enemyBulletPrefab;
         [SerializeField] private GameObject bigExplosionPrefab;
+        [SerializeField] private GameObject smallExplosionPrefab;
         [Header("Parents")]
         [SerializeField] private Transform playerBulletParent;
         [SerializeField] private Transform enemyBulletParent;
         [SerializeField] private Transform bigExplosionParent;
+        [SerializeField] private Transform smallExplosionParent;
         [Header("State")]
         [SerializeField] private List<Bullet> enemyBullets;
         [SerializeField] private List<Bullet> playerBullets;
         [SerializeField] private List<Explosion> bigExplosions;
+        [SerializeField] private List<Explosion> smallExplosions;
         // Start is called before the first frame update
         void Start()
         {
@@ -76,13 +79,13 @@ namespace HackedDesign
 
         public Explosion GetSmallExplosion()
         {
-            var explosion = bigExplosions.FirstOrDefault(e => !e.exploded);
+            var explosion = smallExplosions.FirstOrDefault(e => !e.exploded);
 
             if (!explosion)
             {
-                var go = Instantiate(bigExplosionPrefab, bigExplosionParent);
+                var go = Instantiate(smallExplosionPrefab, smallExplosionParent);
                 explosion = go.GetComponent<Explosion>();
-                bigExplosions.Add(explosion);
+                smallExplosions.Add(explosion);
             }
 
             return explosion;

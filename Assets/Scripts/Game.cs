@@ -62,9 +62,16 @@ namespace HackedDesign
             state.score += amount;
         }
 
-        public void IncreaseHealth(int amount)
+        public int IncreaseHealth(int amount)
         {
             state.health = Mathf.Min(state.health + amount, state.maxHealth);
+            return state.health;
+        }
+
+        public int DecreaseHealth(int amount)
+        {
+            state.health = Mathf.Max(state.health - amount, 0);
+            return state.health;
         }
 
         public void SaveScores()

@@ -9,23 +9,8 @@ namespace HackedDesign
     [RequireComponent(typeof(Collider))]
     public class Exploder : MonoBehaviour
     {
-        [SerializeField] private bool ignoreObstacles = false;
-        [SerializeField] private bool isBig = true;
         [SerializeField] private UnityEvent<Vector3> explosionEvent;
         [SerializeField] private UnityEvent<Vector3, int> hitEvent;
-
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -55,6 +40,7 @@ namespace HackedDesign
                 }
 
                 hitEvent.Invoke(collision.GetContact(0).point, b.GetDamageAmount());
+                b.Reset();
             }
 
         }

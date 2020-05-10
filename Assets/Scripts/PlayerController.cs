@@ -36,6 +36,7 @@ namespace HackedDesign
         //[SerializeField] private Bullet bullet = null;
         [SerializeField] private Transform[] firingPoints = null;
         [SerializeField] private Transform shield = null;
+        [SerializeField] private AudioSource fireAudioSource = null;
 
         [Header("State")]
         [SerializeField] private bool firing = false;
@@ -78,7 +79,8 @@ namespace HackedDesign
                 {
                     bullet.gameObject.SetActive(true);
                 }
-                
+
+                fireAudioSource.Play();
                 bullet.Fire(firingPoint.position, firingPoint.forward, currentSpeed);
                 lastFireTime = Time.time;
                 firingPointIndex++;
@@ -155,11 +157,25 @@ namespace HackedDesign
 
         public void Hit(Vector3 position, int amount)
         {
-            if(Game.instance.IsInvulnerable())
+            SmallExplode(position);
+
+            if (Game.instance.IsInvulnerable())
             {
                 return;
             }
-            Explode(position);
+
+            if(Game.instance.DecreaseHealth(amount) <= 0)
+            {
+                Explode(position);
+            }
+        }
+
+        public void SmallExplode(Vector3 position)
+        {
+            Explosion explosion = Game.instance.pool.GetSmallExplosion();
+
+            explosion.transform.position = position;
+            explosion.Explode();
         }
 
         public void Explode(Vector3 position)

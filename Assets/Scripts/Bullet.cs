@@ -29,7 +29,7 @@ namespace HackedDesign
         void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
-            rigidbody.isKinematic = false;
+            rigidbody.isKinematic = true;
         }
 
         // Update is called once per frame
@@ -42,7 +42,7 @@ namespace HackedDesign
                 {
                     fired = false;
 
-                    //rigidbody.isKinematic = true;
+                    rigidbody.isKinematic = true;
                     trailRenderer.Clear();
                     rigidbody.MovePosition(Vector3.zero);
                     trailRenderer.Clear();
@@ -57,15 +57,25 @@ namespace HackedDesign
             
         }
 
+        public void Reset()
+        {
+            fired = false;
+
+            //rigidbody.isKinematic = true;
+            trailRenderer.Clear();
+            rigidbody.MovePosition(Vector3.zero);
+            trailRenderer.Clear();
+            rigidbody.Sleep();
+        }
+
         public void Fire(Vector3 position, Vector3 forward,float momentum)
         {
             Logger.Log(name, "Fire!");
             fired = true;
             startTimer = Time.time;
             //gameObject.SetActive(false);
-            var tr = GetComponentInChildren<TrailRenderer>();
-            tr.Clear();
-            //trailRenderer.Clear();
+            
+            trailRenderer.Clear();
 
             rigidbody.isKinematic = false;
             rigidbody.MovePosition(position);
@@ -77,7 +87,11 @@ namespace HackedDesign
             //rigidbody.AddForce(transform.forward * (20 * speed));
 
             rigidbody.velocity = transform.forward * (momentum + speed);
-            tr.Clear();
+            
+            if(trailRenderer.positionCount >0)
+            {
+                trailRenderer.SetPosition(0, position);
+            }
 
         }
     }

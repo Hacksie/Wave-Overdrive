@@ -8,6 +8,7 @@ namespace HackedDesign
     {
         [Header("Settings")]
         [SerializeField] private float rotateSpeed = 100;
+        [SerializeField] private bool predictive = false;
 
 
 
@@ -23,7 +24,9 @@ namespace HackedDesign
             if (Game.instance.state.gameState == GameState.Playing)
             {
                 //firing = true;
-                transform.rotation = Quaternion.LookRotation(Game.instance.player.playerModel.transform.position - transform.position, Vector3.up);
+                Vector3 position = Game.instance.player.playerModel.transform.position + (predictive ? (Game.instance.player.playerModel.transform.forward.normalized * Game.instance.player.currentSpeed) : Vector3.zero);
+
+                transform.rotation = Quaternion.LookRotation(position  - transform.position, Vector3.up);
 
                     
                     //Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Game.instance.player.transform.position, Vector3.up), Mathf.Deg2Rad * rotateSpeed * Time.deltaTime);
