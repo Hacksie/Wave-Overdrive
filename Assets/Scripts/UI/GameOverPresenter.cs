@@ -28,7 +28,7 @@ namespace HackedDesign
         // Update is called once per frame
         public void Repaint()
         {
-            if (Game.instance.state.gameState == GameState.Crash || Game.instance.state.gameState == GameState.EndLevel)
+            if (Game.instance.state.gameState == GameState.Crash)
             {
                 if (!gameObject.activeInHierarchy)
                 {

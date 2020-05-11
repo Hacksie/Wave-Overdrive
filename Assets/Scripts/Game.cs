@@ -25,6 +25,7 @@ namespace HackedDesign
         [SerializeField] private Hud hudPanel = null;
         [SerializeField] private Staging stagingPanel = null;
         [SerializeField] private GameOverPresenter gameOverPanel = null;
+        [SerializeField] private LevelCompletePresenter levelCompletePanel = null;
 
         [Header("Settings")]
         [SerializeField] private int numberofLevels = 1;
@@ -33,6 +34,8 @@ namespace HackedDesign
         [SerializeField] private bool skipStaging = false;
         [SerializeField] private bool invulnerable = true;
         [SerializeField] private bool clearPreferencesOnLoad = false;
+        [SerializeField] private List<string> levels = null;
+        [SerializeField] private Vector3 playerStartingLocation = new Vector3(40, 2, 10);
 
 
         private float stagingStartTime = 0;
@@ -113,15 +116,47 @@ namespace HackedDesign
             // FIXME: Kill off any badguys
         }
 
-        void StartLevel()
+        public void StartLevel()
         {
+            if(loop != null)
+            {
+                loop.Stop();
+            }
             state.gameState = GameState.Staging;
             stagingStartTime = Time.time;
-            StartCoroutine(LoadLevel(state.level));
+            player.transform.position = playerStartingLocation;
+            state.health = state.maxHealth;
+
+            var index = state.level % levels.Count;
+
+            StartCoroutine(LoadLevel(levels[index]));
 
             if (skipStaging)
             {
                 Play();
+            }
+        }
+
+        IEnumerator LoadLevel(string level)
+        {
+            if(SceneManager.GetSceneByName(level).isLoaded)
+            {
+                SceneManager.UnloadScene(level);
+            }
+
+            if (!SceneManager.GetSceneByName(level).isLoaded)
+            {
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
+
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
+
+                if (countdown != null)
+                {
+                    countdown.Play();
+                }
             }
         }
 
@@ -188,6 +223,7 @@ namespace HackedDesign
             hudPanel.Repaint();
             stagingPanel.Repaint();
             gameOverPanel.Repaint();
+            levelCompletePanel.Repaint();
         }
 
         void Play()

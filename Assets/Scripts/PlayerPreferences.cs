@@ -11,7 +11,6 @@ namespace HackedDesign
         public int resolutionWidth;
         public int resolutionHeight;
         public int resolutionRefresh;
-        public int resolutionHash;
         public int fullScreen;
         public bool invertX;
         public bool invertY;
@@ -21,8 +20,6 @@ namespace HackedDesign
 
         public PlayerPreferences()
         {
-
-
         }
 
 
@@ -34,7 +31,6 @@ namespace HackedDesign
 
         public void Save()
         {
-            //PlayerPrefs.SetInt("Resolution", resolutionHash);
             PlayerPrefs.SetInt("ResolutionWidth", resolutionWidth);
             PlayerPrefs.SetInt("ResolutionHeight", resolutionHeight);
             PlayerPrefs.SetInt("ResolutionRefresh", resolutionRefresh);
@@ -65,13 +61,14 @@ namespace HackedDesign
             {
                 topScoreList = JsonUtility.FromJson<TopScoreList>(scoresString);
             }
-            Logger.Log("PlayerPreferences", resolutionWidth.ToString(), resolutionHeight.ToString(), resolutionRefresh.ToString());
         }
 
         public void Defaults()
         {
-            resolutionHash = Screen.currentResolution.GetHashCode();
             fullScreen = (int)Screen.fullScreenMode;
+            resolutionWidth = Screen.currentResolution.width;
+            resolutionHeight = Screen.currentResolution.height;
+            resolutionRefresh = Screen.currentResolution.refreshRate;
             invertX = false;
             invertY = false;
             sfxVolume = 0;

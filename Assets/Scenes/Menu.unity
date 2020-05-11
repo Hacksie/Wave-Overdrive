@@ -7176,7 +7176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1386081674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7638,7 +7638,10 @@ MonoBehaviour:
 
 
     Waves code developed by the following youtube tutorial https://www.youtube.com/watch?v=_Ij24zRI9J0
-    by DitzelGames'
+    by DitzelGames
+
+
+    DOTween by Demigiant http://dotween.demigiant.com/index.php'
 --- !u!222 &1442490905
 CanvasRenderer:
   m_ObjectHideFlags: 0

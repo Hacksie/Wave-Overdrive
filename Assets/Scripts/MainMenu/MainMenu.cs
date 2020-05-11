@@ -58,6 +58,7 @@ namespace HackedDesign
 
         void Start()
         {
+            preferences.Defaults();
             preferences.Load();
             SetPreferences();
             PopulateOptionsValues();

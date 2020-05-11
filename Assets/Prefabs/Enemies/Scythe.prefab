@@ -650,7 +650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e031da0e50557a4ba156d23aa917cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 100
   predictive: 1
 --- !u!114 &5120134902547193118
 MonoBehaviour:
@@ -809,12 +808,12 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 75
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

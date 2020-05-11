@@ -18,7 +18,6 @@ namespace HackedDesign
         [SerializeField] private AudioSource fireAudioSource = null;
 
         [Header("State")]
-        [SerializeField] private bool firing = false;
         [SerializeField] private float lastFireTime = 0;
         [SerializeField] private int firingPointIndex = 0;
 
@@ -32,15 +31,9 @@ namespace HackedDesign
         // Update is called once per frame
         void Update()
         {
-
             if (Game.instance.player.transform.position.z <= (transform.position.z + zDistance) && Vector3.Distance(Game.instance.player.transform.position, transform.position) <= range)
             {
-                firing = true;
                 UpdateFiring();
-            }
-            else
-            {
-                firing = false;
             }
         }
 

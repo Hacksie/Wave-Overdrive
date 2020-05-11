@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c89fd18c4fa1f49a7c643a98bd8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 65
+  speed: 55
   damage: 5
-  timeOut: 5
+  timeOut: 3
   trailRenderer: {fileID: 5445646272612668781}
   fired: 0
 --- !u!54 &5445646272612668782

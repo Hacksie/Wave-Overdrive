@@ -15,7 +15,7 @@ namespace HackedDesign
         [Header("Referenced GameObjects")]
         [SerializeField] private TrailRenderer trailRenderer = null;
 
-        private new Rigidbody rigidbody;
+        private Rigidbody rigidbody;
 
         [Header("State")]
         [SerializeField] public bool fired = false;
@@ -76,21 +76,10 @@ namespace HackedDesign
             //gameObject.SetActive(false);
 
             trailRenderer.Clear();
-
             rigidbody.isKinematic = false;
             rigidbody.MovePosition(position);
             transform.forward = forward;
-
-            //trailRenderer.Clear();
-            //gameObject.SetActive(true);
-
-            //rigidbody.AddForce(transform.forward * (20 * speed));
-
             rigidbody.velocity = transform.forward * (momentum + speed);
-
-
-
-            Logger.Log(name, trailRenderer.positionCount.ToString());
 
             trailRenderer.SetPosition(0, position);
         }
