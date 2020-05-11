@@ -2301,6 +2301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f712b40837ace443afa66e7c89ac76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  small: 0
   exploded: 0
   explodeStartTime: 0
-  explodeTimeOut: 3
+  explodeTimeOut: 2

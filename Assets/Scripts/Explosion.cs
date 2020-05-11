@@ -10,7 +10,7 @@ namespace HackedDesign
         public bool small = false;
         public bool exploded = false;
         public float explodeStartTime = 0;
-        public float explodeTimeOut = 5;
+        public float explodeTimeOut = 2;
         private Animator animator;
 
         void Awake()
@@ -21,7 +21,7 @@ namespace HackedDesign
         // Update is called once per frame
         void Update()
         {
-            if (exploded && (Time.time - explodeStartTime > explodeTimeOut))
+            if (exploded && ((Time.time - explodeStartTime) > explodeTimeOut))
             {
                 exploded = false;
             }

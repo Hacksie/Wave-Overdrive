@@ -15,6 +15,11 @@ namespace HackedDesign
         [Header("Referenced GameObjects")]
         [SerializeField] public PlayerController player = null;
         [SerializeField] public Pool pool = null;
+        [SerializeField] private AudioSource pickupSound = null;
+
+        [Header("Audio")]
+        [SerializeField] private AudioSource countdown = null;
+        [SerializeField] private AudioSource loop = null;
 
         [Header("UI")]
         [SerializeField] private Hud hudPanel = null;
@@ -22,10 +27,13 @@ namespace HackedDesign
         [SerializeField] private GameOverPresenter gameOverPanel = null;
 
         [Header("Settings")]
+        [SerializeField] private int numberofLevels = 1;
         [SerializeField] private int stagingTime = 5;
         [SerializeField] private float scoreTickTime = 1;
         [SerializeField] private bool skipStaging = false;
         [SerializeField] private bool invulnerable = true;
+        [SerializeField] private bool clearPreferencesOnLoad = false;
+
 
         private float stagingStartTime = 0;
         public float playingStartTime = 0;
@@ -43,10 +51,17 @@ namespace HackedDesign
 
         public void Quit()
         {
-            SaveScores();
+            //preferences.Save();
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+            
         }
-
+        public void PickupSound()
+        {
+            if (pickupSound != null)
+            {
+                pickupSound.Play();
+            }
+        }
         public void IncreaseKills(int amount)
         {
             state.kills += amount;
@@ -74,11 +89,6 @@ namespace HackedDesign
             return state.health;
         }
 
-        public void SaveScores()
-        {
-
-        }
-
         public void GameEndCrash()
         {
             state.gameState = GameState.Crash;
@@ -88,6 +98,11 @@ namespace HackedDesign
         void Start()
         {
             preferences.Load();
+            if (clearPreferencesOnLoad)
+            {
+                preferences.ClearAll();
+            }
+            
             state.Reset();
             StartLevel();
         }
@@ -102,25 +117,36 @@ namespace HackedDesign
         {
             state.gameState = GameState.Staging;
             stagingStartTime = Time.time;
-            LoadLevel(state.level);
-            if(skipStaging)
+            StartCoroutine(LoadLevel(state.level));
+
+            if (skipStaging)
             {
                 Play();
             }
         }
 
-        void LoadLevel(int level)
+        IEnumerator LoadLevel(int level)
         {
             if (!SceneManager.GetSceneByName(@"Level " + level).isLoaded)
             {
-                SceneManager.LoadScene(@"Level " + level, LoadSceneMode.Additive);
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(@"Level " + level, LoadSceneMode.Additive);
+
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
+
+                if (countdown != null)
+                {
+                    countdown.Play();
+                }
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            switch(state.gameState)
+            switch (state.gameState)
             {
                 case GameState.Staging:
                     UpdateStaging();
@@ -141,17 +167,17 @@ namespace HackedDesign
 
         private void UpdateScoring()
         {
-            if(Time.time - lastScoreTick >= scoreTickTime)
+            if (Time.time - lastScoreTick >= scoreTickTime)
             {
                 IncreaseScore(1);
                 lastScoreTick = Time.time;
             }
-            
+
         }
 
         private void UpdateStaging()
         {
-            if(Time.time - stagingStartTime >= stagingTime)
+            if (Time.time - stagingStartTime >= stagingTime)
             {
                 Play();
             }
@@ -169,6 +195,15 @@ namespace HackedDesign
             state.gameState = GameState.Playing;
             playingStartTime = Time.time;
             lastScoreTick = Time.time;
+            if (countdown != null)
+            {
+                countdown.Stop();
+            }
+
+            if (loop != null)
+            {
+                loop.Play();
+            }
         }
 
 

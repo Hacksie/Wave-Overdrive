@@ -9,20 +9,20 @@ namespace HackedDesign
     public class Pool : MonoBehaviour
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject bulletPrefab;
-        [SerializeField] private GameObject enemyBulletPrefab;
-        [SerializeField] private GameObject bigExplosionPrefab;
-        [SerializeField] private GameObject smallExplosionPrefab;
+        [SerializeField] private GameObject bulletPrefab = null;
+        [SerializeField] private GameObject enemyBulletPrefab = null;
+        [SerializeField] private GameObject bigExplosionPrefab = null;
+        [SerializeField] private GameObject smallExplosionPrefab = null;
         [Header("Parents")]
-        [SerializeField] private Transform playerBulletParent;
-        [SerializeField] private Transform enemyBulletParent;
-        [SerializeField] private Transform bigExplosionParent;
-        [SerializeField] private Transform smallExplosionParent;
+        [SerializeField] private Transform playerBulletParent = null;
+        [SerializeField] private Transform enemyBulletParent = null;
+        [SerializeField] private Transform bigExplosionParent = null;
+        [SerializeField] private Transform smallExplosionParent = null;
         [Header("State")]
-        [SerializeField] private List<Bullet> enemyBullets;
-        [SerializeField] private List<Bullet> playerBullets;
-        [SerializeField] private List<Explosion> bigExplosions;
-        [SerializeField] private List<Explosion> smallExplosions;
+        [SerializeField] private List<Bullet> enemyBullets = new List<Bullet>();
+        [SerializeField] private List<Bullet> playerBullets = new List<Bullet>();
+        [SerializeField] private List<Explosion> bigExplosions = new List<Explosion>();
+        [SerializeField] private List<Explosion> smallExplosions = new List<Explosion>();
         // Start is called before the first frame update
         void Start()
         {

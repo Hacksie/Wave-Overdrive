@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
 
 namespace HackedDesign
 {
@@ -15,8 +17,20 @@ namespace HackedDesign
         public bool invertY;
         public float sfxVolume;
         public float musicVolume;
-        public List<TopScore> scoresList = new List<TopScore>();
-        
+        public TopScoreList topScoreList;
+
+        public PlayerPreferences()
+        {
+
+
+        }
+
+
+        public void ClearAll()
+        {
+            PlayerPrefs.DeleteAll();
+            Defaults();
+        }
 
         public void Save()
         {
@@ -24,38 +38,34 @@ namespace HackedDesign
             PlayerPrefs.SetInt("ResolutionWidth", resolutionWidth);
             PlayerPrefs.SetInt("ResolutionHeight", resolutionHeight);
             PlayerPrefs.SetInt("ResolutionRefresh", resolutionRefresh);
-            
+
             PlayerPrefs.SetInt("FullScreen", fullScreen);
             PlayerPrefs.SetInt("InvertX", invertX ? 1 : 0);
             PlayerPrefs.SetInt("InvertY", invertY ? 1 : 0);
             PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
             PlayerPrefs.SetFloat("MusicVolume", musicVolume);
 
-            var scoresString = JsonUtility.ToJson(scoresList);
-            Logger.Log(scoresString);
-            PlayerPrefs.SetString("Scores",scoresString);
+            topScoreList.scoresList = topScoreList.scoresList.OrderByDescending(score => score.score).ThenByDescending(score => score.kills).ThenByDescending(score => score.pickups).Take(10).ToList();
+            var scoresString = JsonUtility.ToJson(topScoreList);
+            PlayerPrefs.SetString("Scores", scoresString);
         }
 
         public void Load()
         {
-            //resolutionHash = PlayerPrefs.GetInt("Resolution", Screen.currentResolution.GetHashCode());
             resolutionWidth = PlayerPrefs.GetInt("ResolutionWidth", Screen.currentResolution.width);
             resolutionHeight = PlayerPrefs.GetInt("ResolutionHeight", Screen.currentResolution.height);
             resolutionRefresh = PlayerPrefs.GetInt("ResolutionRefresh", Screen.currentResolution.refreshRate);
             fullScreen = PlayerPrefs.GetInt("FullScreen", (int)Screen.fullScreenMode);
-            invertX = PlayerPrefs.GetInt("InvertX",0) != 0? true: false;
+            invertX = PlayerPrefs.GetInt("InvertX", 0) != 0 ? true : false;
             invertY = PlayerPrefs.GetInt("InvertY", 0) != 0 ? true : false;
             sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0);
             musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0);
             var scoresString = PlayerPrefs.GetString("Scores", "");
-            if(string.IsNullOrWhiteSpace(scoresString))
+            if (!string.IsNullOrWhiteSpace(scoresString))
             {
-                scoresList = new List<TopScore>();
+                topScoreList = JsonUtility.FromJson<TopScoreList>(scoresString);
             }
-            {
-                scoresList = JsonUtility.FromJson<List<TopScore>>(scoresString);
-            }
-            
+            Logger.Log("PlayerPreferences", resolutionWidth.ToString(), resolutionHeight.ToString(), resolutionRefresh.ToString());
         }
 
         public void Defaults()
@@ -64,18 +74,87 @@ namespace HackedDesign
             fullScreen = (int)Screen.fullScreenMode;
             invertX = false;
             invertY = false;
+            sfxVolume = 0;
+            musicVolume = 0;
+            topScoreList = new TopScoreList();
+            topScoreList.scoresList = new List<TopScore>()
+                {
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 500
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 600
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 700
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 800
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 1000
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 1200
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 1400
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 1600
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 1800
+                    },
+                    new TopScore()
+                    {
+                        code = "Ben",
+                        kills = 20,
+                        pickups = 100,
+                        score = 2000
+                    }
+                };
 
-            
         }
     }
 
-    [System.Serializable]
-    public class TopScoreList
-    {
-        public List<TopScore> scores;
-    }
-
-    [System.Serializable]
+    [Serializable]
     public class TopScore
     {
         public string code;
@@ -83,4 +162,12 @@ namespace HackedDesign
         public int kills;
         public int pickups;
     }
+
+    [Serializable]
+    public class TopScoreList
+    {
+        public List<TopScore> scoresList;
+    }
+
+
 }

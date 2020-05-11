@@ -9,8 +9,8 @@ namespace HackedDesign
     [RequireComponent(typeof(Collider))]
     public class Exploder : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<Vector3> explosionEvent;
-        [SerializeField] private UnityEvent<Vector3, int> hitEvent;
+        [SerializeField] private UnityEvent<Vector3> explosionEvent = null;
+        [SerializeField] private UnityEvent<Vector3, int> hitEvent = null;
 
         private void OnCollisionEnter(Collision collision)
         {

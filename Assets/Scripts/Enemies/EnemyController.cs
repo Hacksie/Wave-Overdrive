@@ -11,6 +11,7 @@ namespace HackedDesign
         [SerializeField] private float fireRate = 1f;
         [SerializeField] private float range = 100.0f;
         [SerializeField] private float zDistance = 25f;
+        [SerializeField] private int score = 50;
 
         [Header("Referenced GameObjects")]
         [SerializeField] private Transform[] firingPoints = null;
@@ -41,9 +42,6 @@ namespace HackedDesign
             {
                 firing = false;
             }
-
-
-
         }
 
         private void UpdateFiring()
@@ -70,18 +68,25 @@ namespace HackedDesign
                     firingPointIndex = 0;
                 }
 
-                fireAudioSource.Play();
+                if (fireAudioSource != null)
+                {
+                    fireAudioSource.Play();
+                }
             }
         }
 
         public void Hit(Vector3 position, int amount)
         {
-            SmallExplode(position);
+            
             health -= amount;
             
             if (health <= 0)
             {
                 Explode(position);
+            }
+            else
+            {
+                SmallExplode(position);
             }
 
         }
@@ -98,10 +103,12 @@ namespace HackedDesign
         public void Explode(Vector3 position)
         {
             Logger.Log(name, "Enemy controller explode");
-            Explosion explosion = Game.instance.pool.GetBigExplosion();
+            Explosion explosion = Game.instance.pool.GetSmallExplosion();
 
             explosion.transform.position = position;
             explosion.Explode();
+            Game.instance.IncreaseScore(score);
+            Game.instance.IncreaseKills(1);
             gameObject.SetActive(false);
         }
     }

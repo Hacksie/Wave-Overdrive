@@ -1004,7 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8886596327130082908}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: Firing Point 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1348,7 +1348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2009323146976744024}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: Firing Point 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1395,7 +1395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5019807341447982879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3920934831666481316}
@@ -1434,7 +1434,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7712142712134252443}
         m_TargetAssemblyTypeName: HackedDesign.EnemyController, Assembly-CSharp
-        m_MethodName: Explode
+        m_MethodName: SmallExplode
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1473,8 +1473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   fireRate: 1
-  range: 100
+  range: 125
   zDistance: 10
+  score: 50
   firingPoints:
   - {fileID: 2009323146976744024}
   - {fileID: 8886596327130082908}
@@ -3734,5 +3735,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e031da0e50557a4ba156d23aa917cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 100
   predictive: 0

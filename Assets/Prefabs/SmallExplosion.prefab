@@ -67,7 +67,7 @@ MonoBehaviour:
   small: 1
   exploded: 0
   explodeStartTime: 0
-  explodeTimeOut: 1
+  explodeTimeOut: 0.75
 --- !u!1 &2262470392939213739
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +80,6 @@ GameObject:
   - component: {fileID: 6409714535138473590}
   - component: {fileID: 5712291970101359190}
   - component: {fileID: 7244726066080956568}
-  - component: {fileID: 8207526973229749667}
   m_Layer: 0
   m_Name: Icosphere
   m_TagString: Untagged
@@ -2306,17 +2305,3 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &8207526973229749667
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2262470392939213739}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}

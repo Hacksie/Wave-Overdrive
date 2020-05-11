@@ -11,6 +11,7 @@ namespace HackedDesign
         [SerializeField] private TextMeshProUGUI levelText = null;
         [SerializeField] private TextMeshProUGUI speedText = null;
         [SerializeField] private TextMeshProUGUI healthText = null;
+        [SerializeField] private TextMeshProUGUI killsText = null;
 
         
         public void Repaint()
@@ -19,6 +20,7 @@ namespace HackedDesign
             levelText.text = Game.instance.state.level.ToString();
             speedText.text = Game.instance.player.currentSpeed.ToString("N1");
             healthText.text = Game.instance.state.health.ToString();
+            killsText.text = Game.instance.state.kills.ToString();
         }
     }
 }

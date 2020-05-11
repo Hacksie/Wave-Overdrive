@@ -10,10 +10,10 @@ namespace HackedDesign
     {
         [SerializeField] private float speed = 50.0f;
         [SerializeField] private int damage = 50;
-        
+
         [SerializeField] private float timeOut = 5.0f;
         [Header("Referenced GameObjects")]
-        [SerializeField] private TrailRenderer trailRenderer;
+        [SerializeField] private TrailRenderer trailRenderer = null;
 
         private new Rigidbody rigidbody;
 
@@ -21,7 +21,7 @@ namespace HackedDesign
         [SerializeField] public bool fired = false;
         private float startTimer = 0;
 
-        
+
         public int GetDamageAmount()
         {
             return damage;
@@ -35,10 +35,10 @@ namespace HackedDesign
         // Update is called once per frame
         void Update()
         {
-            if(fired)
+            if (fired)
             {
-                
-                if(Time.time - startTimer >= timeOut)
+
+                if (Time.time - startTimer >= timeOut)
                 {
                     fired = false;
 
@@ -47,14 +47,14 @@ namespace HackedDesign
                     rigidbody.MovePosition(Vector3.zero);
                     trailRenderer.Clear();
                     rigidbody.Sleep();
-                    
+
                 }
             }
         }
 
         private void UpdatePosition()
         {
-            
+
         }
 
         public void Reset()
@@ -68,13 +68,13 @@ namespace HackedDesign
             rigidbody.Sleep();
         }
 
-        public void Fire(Vector3 position, Vector3 forward,float momentum)
+        public void Fire(Vector3 position, Vector3 forward, float momentum)
         {
             Logger.Log(name, "Fire!");
             fired = true;
             startTimer = Time.time;
             //gameObject.SetActive(false);
-            
+
             trailRenderer.Clear();
 
             rigidbody.isKinematic = false;
@@ -87,12 +87,12 @@ namespace HackedDesign
             //rigidbody.AddForce(transform.forward * (20 * speed));
 
             rigidbody.velocity = transform.forward * (momentum + speed);
-            
-            if(trailRenderer.positionCount >0)
-            {
-                trailRenderer.SetPosition(0, position);
-            }
 
+
+
+            Logger.Log(name, trailRenderer.positionCount.ToString());
+
+            trailRenderer.SetPosition(0, position);
         }
     }
 }

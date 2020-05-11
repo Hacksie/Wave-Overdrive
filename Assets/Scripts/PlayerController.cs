@@ -12,16 +12,17 @@ namespace HackedDesign
     {
         private Vector2 inputVector;
         [Header("Settings")]
-        [SerializeField] private float movementSpeed = 10;
+        [SerializeField] public float movementSpeed = 10;
+        
         [SerializeField] private float rotateSpeed = 340;
         [SerializeField] private float leanAngle = 80;
         [SerializeField] private float leanTime = 33;
         [SerializeField] private Rect clamp = new Rect(0.2f, 0.2f, 0.6f, 0.6f);
         [SerializeField] private float heightAboveWaves = 1.0f;
         [SerializeField] private bool allowYMovement = false;
-        [SerializeField] private bool invertX = false;
-        [SerializeField] private bool invertY = false;
-        [SerializeField] private float forwardSpeed = 1;
+        [SerializeField] public float forwardSpeed = 20;
+        [SerializeField] public bool applyLevelFactor = true;
+        [SerializeField] public float levelFactor = 10;
         [SerializeField] private float acceleration = 0.01f;
         [SerializeField] private float currentTime = 0;
         [SerializeField] public float currentSpeed = 0;
@@ -80,13 +81,18 @@ namespace HackedDesign
                     bullet.gameObject.SetActive(true);
                 }
 
-                fireAudioSource.Play();
+                
                 bullet.Fire(firingPoint.position, firingPoint.forward, currentSpeed);
                 lastFireTime = Time.time;
                 firingPointIndex++;
                 if(firingPointIndex >= firingPoints.Length)
                 {
                     firingPointIndex = 0;
+                }
+
+                if (fireAudioSource != null)
+                {
+                    fireAudioSource.Play();
                 }
             }
         }
@@ -95,7 +101,7 @@ namespace HackedDesign
         {
             var currentPos = transform.position;
             currentTime = Time.time - Game.instance.playingStartTime;
-            currentSpeed = forwardSpeed + (currentTime * acceleration);
+            currentSpeed = forwardSpeed + (applyLevelFactor ? (levelFactor * Game.instance.state.level) : 0) + (currentTime * acceleration);
             currentPos.z += currentSpeed * Time.deltaTime;
             transform.position = currentPos;
         }
